@@ -8,18 +8,54 @@
 <main>
 
     <div>
-        <button value="add"></button>
-        <button value="clear"></button>
+        <button value="add" onclick="doAddElement()"> + </button>
+        <button value="clear" id="btnClear"> clear </button>
         <ul id="toDo">
 
         </ul>
     </div>
 
+    <!--
     <div id="mainDiv">
         main Div
     </div>
+    -->
 </main>
 
+<script>
+    let toDo = document.getElementById("toDo");
+
+    btnClear.onclick = function () {
+        toDo.innerHTML = "";
+    }
+
+    function doSave(el){
+        console.log(el.target.value);
+        let parent = el.target.parentElement;
+        let value = el.target.value;
+        parent.innerHTML = value;
+    }
+
+    function doEdit(el) {
+        let value = el.target.innerHTML;
+        let input = document.createElement("input");
+        input.type = "text";
+        input.value = value;
+        el.target.innerHTML = "";
+        input.focus();
+        input.onblur = doSave;
+        input.dataset.old = value;
+        el.target.appendChild(input);
+    }
+
+    function doAddElement() {
+        let li = document.createElement("li");
+        li.innerHTML = "q";
+        li.ondblclick = doEdit;
+        toDo.appendChild(li);
+    }
+    
+</script>
 
 
 <script>
