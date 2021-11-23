@@ -29,10 +29,24 @@
         toDo.innerHTML = "";
     }
 
+    function onKeyPress(el){
+        // console.log("Press: " + el.key);
+        if(el.key === "Escape") {
+            let parent = el.target.parentElement;
+            let value = el.target.dataset.old;
+            el.target.onblur= null;
+            // console.log("old: " + value);
+            parent.innerHTML = value;
+        } else if(el.key === "Enter") {
+            doSave(el);
+        }
+    }
+
     function doSave(el){
-        console.log(el.target.value);
+        // console.log(el.target.value);
         let parent = el.target.parentElement;
         let value = el.target.value;
+        el.target.onblur= null;
         parent.innerHTML = value;
     }
 
@@ -45,13 +59,24 @@
         input.focus();
         input.onblur = doSave;
         input.dataset.old = value;
+        input.onkeydown = onKeyPress;
         el.target.appendChild(input);
+    }
+
+    function doDelete(el) {
+        let liToDel = el.target.parentElement;
+        toDo.removeChild(liToDel);
     }
 
     function doAddElement() {
         let li = document.createElement("li");
-        li.innerHTML = "q";
+        li.innerHTML = "new element";
         li.ondblclick = doEdit;
+
+        let span = document.createElement("span");
+        span.innerHTML = " - ";
+        span.addEventListener("click", doDelete);
+        li.appendChild(span);
         toDo.appendChild(li);
     }
     

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {padding: 30px; margin: 30px; border: 1px solid brown;}
+    </style>
+</head>
+<body>
+
+<div id="mainDiv">
+    My main div
+</div>
+
+<div id="outer" style="background: aqua">
+    <div id="inner" style="background: cadetblue" > Content </div>
+</div>
+
+<script>
+    let outer = document.getElementById("outer");
+    let inner = document.getElementById("inner");
+
+    function f(el) {
+        console.log(el.target.id);
+    }
+
+    function evForInner() {
+        console.log("For Inner");
+        event.stopPropagation();
+    }
+
+    function evForOuter() {
+        console.log("For Outer");
+    }
+    outer.onclick = evForOuter;
+    inner.onclick = evForInner;
+
+</script>
+
+
+<script>
+    let mainDiv = document.getElementById("mainDiv");
+
+    mainDiv.addEventListener("click", () => {console.log("Hi")});
+    mainDiv.removeEventListener("click", () => {console.log("Hi")});
+
+    let c =0;
+    function f1(el) {
+        console.log(c++);
+        el.target.style.backgroundColor = "green"; }
+    function f2(el) { el.target.style.border = "2px solid red";  }
+
+
+
+    // mainDiv.onclick = f1;
+    // mainDiv.onclick = f2;
+    // mainDiv.addEventListener("click", f1);
+    // mainDiv.addEventListener("click", f1);
+    // mainDiv.addEventListener("click", f1);
+
+    //mainDiv.removeEventListener("click", f1);
+
+    //mainDiv.addEventListener("click", f2);
+    //mainDiv.onclick = f2;
+
+
+</script>
+
+</body>
+</html>
