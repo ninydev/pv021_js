@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+    <thead>
+
+    </thead>
+    <tbody>
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+    -->
+<table id="tblMoney">
+    <thead>
+        <th> Месяц </th><th> Заболевания </th>
+    </thead>
+    <tbody>
+        <tr><td>Ноябрь</td><td>28000</td></tr>
+        <tr><td>Декабрь</td><td>29000</td></tr>
+    </tbody>
+    <tfoot>
+        <tr><td>Итого</td><td>?</td></tr>
+    </tfoot>
+</table>
+
+<script>
+    let tblMoney = document.getElementById("tblMoney");
+
+    console.log ( tblMoney.tBodies[0].rows.length);
+    let sum = 0;
+    for (const r of tblMoney.tBodies[0].rows) {
+        console.log(r.cells[1].innerText);
+        sum +=  parseInt( r.cells[1].innerText) ;
+    }
+
+    console.log(sum);
+
+    tblMoney.tFoot.rows[0].cells[1].innerHTML = sum;
+    //console.log ("Rows: " + tblMoney.rows[0].cells.length);
+
+</script>
+</body>
+</html>

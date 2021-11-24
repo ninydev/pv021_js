@@ -23,14 +23,58 @@
 
     }
 
-    let a = new ClassParent({someVar: "element A"});
-    let b = new ClassParent({someVar: "element B"});
+
+    class Children extends ClassParent {
+        #value = 10;
+
+        get value () {return this.#value}
+        set value (val) {this.#value = val;}
+
+        _value1 = 10;
+
+        get value1 () {return this._value1}
+        set value1 (val) {this._value1 = val;}
+
+        constructor(props) {
+            super(props);
+        }
+
+        doSomeThing (){
+            //super.doSomeThing();
+            console.log("Do in Children");
+        }
+
+        static stat = 10;
+
+    }
+
+
+    let b = new Children({someVar: "element B"});
+    b.doSomeThing();
+
+
+    let isChildren = b instanceof Children;
+    let isParent = b instanceof ClassParent;
+    console.log("isChildren " + isChildren);
+    console.log("isParent " + isParent);
+    console.log(b.toString());
+
+
+
+
+
+    // let a = new ClassParent({someVar: "element A"});
+    // let b = new Children({someVar: "element B"});
+    //
+    // console.log(a.someVar);
+    // console.log(b.someVar);
+
 
     //a.nextVar = 10;
 
     //a.doSomeThing();
 
-    console.log(typeof (ClassParent));
+    // console.log(typeof (ClassParent));
 
     //console.log(a.someVar);
     //console.log(a.nextVar);
