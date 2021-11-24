@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // let Obj = {};
+    // Obj.id = 10;
+    // console.log(Obj.id);
+
+    class ClassParent {
+
+        constructor(props) {
+            this.someVar = props.someVar;
+        }
+
+        doSomeThing (){
+            console.log("Do");
+        }
+
+    }
+
+    let a = new ClassParent({someVar: "element A"});
+    let b = new ClassParent({someVar: "element B"});
+
+    //a.nextVar = 10;
+
+    //a.doSomeThing();
+
+    console.log(typeof (ClassParent));
+
+    //console.log(a.someVar);
+    //console.log(a.nextVar);
+    //console.log(b.someVar);
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

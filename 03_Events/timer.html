@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    let s = 0;
+    function doMeSec() {
+        console.log(s++);
+        if(s > 3) {
+            clearInterval(numFun);
+            setTimeout(doMeSec, 2000);
+        }
+
+
+    }
+
+    let numFun = setInterval(doMeSec, 1000);
+
+
+</script>
+
+
+</body>
+</html>

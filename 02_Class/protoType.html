@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+
+
+
+    function createRabbit(props) {
+        this.name = props.name;
+        this.whatEat = props.eat;
+    }
+
+    let testB = new createRabbit({name:"Бакс Бани", eat:"Морковь"});
+    console.log(testB.name);
+
+    // let testA =  createRabbit({name:"Бакс Бани", eat:"Морковь"});
+    // if (testA.name !== undefined)
+    //     console.log(typeof(testA.name));
+
+
+    let animal = {
+        eat: true,
+        someFun: function () {
+            console.log(" Fun")
+        }
+    }
+
+    function Rabbit (props) {
+            this.name = props.name;
+            this.whatEat = props.eat;
+    }
+
+    Rabbit.prototype = animal;
+
+    let Banny = new Rabbit({name:"Бакс Бани", eat:"Морковь"});
+    Banny.someFun();
+    //console.log(Banny.eat);
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
