@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <style>
+        #ifId {}
+        .ifClass {}
+        ifTag {}
+
+        nav#menuMain li.isActive span {color: gray}
+
+    </style>
+
+
 </head>
 <body>
     <header></header>
     <main>
         <div id="divMain">
             <ul id="mainUl">11
-                <li>1</li>
+                <li class="selected">1</li>
                 <li>2</li>
                 <li id="elNum3">3
                     <ul id="elInLi">
@@ -19,7 +30,7 @@
                     </ul>
                 </li>
                 <li>4</li>
-                <li>5</li>
+                <li class="selected">5</li>
             </ul>
         </div>
     </main>
@@ -28,6 +39,24 @@
     </footer>
 
 <script>
+
+    //window.alert("test");
+
+    //console.log(document);
+
+    // document.title = "My Title";
+    // console.log(document.location);
+    // document.location.href = "https://google.com";
+
+    // let elements = document.querySelectorAll(".selected");
+    // console.log(elements);
+    //
+    // for (const element of elements) {
+    //     element.style.border = "1px solid red";
+    // }
+
+    //elements.style.border = "1px solid green";
+
 
 
 

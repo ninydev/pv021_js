@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="printDoc">
+  распечатать данные
+</button>
+
+
+<script>
+  let bigData = [10,10,20,20,30];
+  document.getElementById("printDoc").onclick = function () {
+
+    let windowForPrint = window.open(
+            "about:blank",// url
+            "windowForPrint", // Имя окна для обращения к нему
+            "width=500,height=300"
+    );
+
+    windowForPrint.document.write("<ul>");
+    for (const data of bigData) {
+      windowForPrint.document.write("<li>" + data + "</li>");
+    }
+    windowForPrint.document.write("</ul>");
+    windowForPrint.print();
+    windowForPrint.close();
+
+
+  }
+</script>
+</body>
+</html>
