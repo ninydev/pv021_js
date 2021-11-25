@@ -11,11 +11,14 @@
     <title>Forms</title>
 </head>
 <body>
+
+<form></form>
+
 <div class="container">
-    <form class="row g-3">
+    <form class="row g-3" id="frmId" name="frmRegistration">
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Эл. адрес</label>
-            <input type="email" class="form-control" id="inputEmail4">
+            <input type="text" class="form-control" id="inputEmail4">
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Пароль</label>
@@ -66,6 +69,47 @@
 
 <script>
 
+    let frm = document.forms.frmRegistration;
+    console.log(frm);
+
+    //
+    // console.log(" For IN");
+    // for (const frmKey in frm) {
+    //     console.log(frmKey);
+    // }
+
+
+    console.log(" For OF");
+    for (const frmElement of frm) {
+        console.log(frmElement);
+    }
+
+    frm.onchange = function (e) {
+        console.log(e);
+    }
+
+    frm.onsubmit = function (e) {
+        console.log("Before send -- after submit");
+        return false;
+    }
+
+
+    // console.log(" For OF elements");
+    // for (const frmElement of frm.elements) {
+    //     console.log(frmElement);
+    // }
+
+
+    // console.log(" For OF childrens");
+    // for (const frmElement of frm.childNodes) {
+    //     console.log(frmElement);
+    // }
+
+    // let frmId = document.getElementById("frmId");
+    // let frmId =document.querySelector("#frmId");
+    // console.log(frmId);
+
+    // let frmTemp1 = document.forms[0]; // мы можем попасть не на свою форму, но допустимо
 </script>
 
 </body>
