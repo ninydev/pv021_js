@@ -23,11 +23,11 @@
         <input type="hidden" name="csrf-token" value="12412534152414aab45ba">
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Эл. адрес</label>
-            <input type="text" class="form-control" id="inputEmail4">
+            <input type="text" name="email" class="form-control" id="inputEmail4">
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Пароль</label>
-            <input type="text" class="form-control" id="inputPassword4">
+            <input type="text" name="pswd" class="form-control" id="inputPassword4">
             <div id="helpPswd">
                 <ul>
                     <li> Длина </li>
@@ -70,6 +70,10 @@
             </div>
         </div>
         <div class="col-12">
+            <button id="btnSend" type="button" class="btn btn-primary">Send by RestAPI</button>
+        </div>
+
+        <div class="col-12">
             <button type="submit" class="btn btn-primary">Войти в систему</button>
         </div>
     </form>
@@ -83,6 +87,27 @@
 
 <script>
 
+    let frm = document.getElementById("frmId");
+    
+    document.getElementById("btnSend").onclick = function () {
+        let frmData = new FormData(frm);
+        console.log(frmData);
+
+        frmData.append("myKey", "myVal");
+        frmData.append("send_at", new Date());
+
+        for(let [name,val] of frmData){
+            console.log(`${name} => ${val}`);
+        }
+    }
+
+    frm.onsubmit = function () {
+        console.log("Submit");
+        return false; // не даст отправить форму
+    }
+
+
+
     let reNumbers = new RegExp("[0-9]");
     let reUpperCase = new RegExp("[A-Z]");
     let reLowerCase = new RegExp("[a-z]");
@@ -95,6 +120,7 @@
         let newPswd = e.target.value;
         // Требования:
         // длина > 8, Строчная. Прописная. Цифра. Спецсимвол.
+
         if(newPswd.length > 2) {
             // div* --> ul --> li [0]
             helpPswd.children[0].children[0].classList.add("isCheck");
@@ -127,12 +153,11 @@
         }
 
 
-
-
-
         //console.log("OnChange");
         //console.log(e.target.value);
     }
+
+
 
 </script>
 
