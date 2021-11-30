@@ -9,20 +9,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Forms</title>
+
+    <style>
+        #helpPswd li.isCheck {color: green}
+        #helpPswd li {color: red}
+    </style>
 </head>
 <body>
 
-<form></form>
 
 <div class="container">
-    <form class="row g-3" id="frmId" name="frmRegistration">
+    <form class="frmClass row g-3" id="frmId" name="frmRegistration">
+        <input type="hidden" name="csrf-token" value="12412534152414aab45ba">
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Эл. адрес</label>
             <input type="text" class="form-control" id="inputEmail4">
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Пароль</label>
-            <input type="password" class="form-control" id="inputPassword4">
+            <input type="text" class="form-control" id="inputPassword4">
+            <div id="helpPswd">
+                <ul>
+                    <li> Длина </li>
+                    <li> Строчная </li>
+                    <li> Прописная </li>
+                    <li> Цифра </li>
+                    <li> Спецсимвол </li>
+                </ul>
+            </div>
         </div>
         <div class="col-12">
             <label for="inputAddress" class="form-label">Адрес</label>
@@ -69,30 +83,97 @@
 
 <script>
 
-    let frm = document.forms.frmRegistration;
-    console.log(frm);
+    let reNumbers = new RegExp("[0-9]");
+    let reUpperCase = new RegExp("[A-Z]");
+    let reLowerCase = new RegExp("[a-z]");
+    let reSpecCase = new RegExp("[!@#\\$%\\^&\\*\\(\\)\\[\\]]");
 
+    let inPswd = document.getElementById("inputPassword4");
+    let helpPswd = document.getElementById("helpPswd");
+
+    inPswd.onkeyup = function (e) {
+        let newPswd = e.target.value;
+        // Требования:
+        // длина > 8, Строчная. Прописная. Цифра. Спецсимвол.
+        if(newPswd.length > 2) {
+            // div* --> ul --> li [0]
+            helpPswd.children[0].children[0].classList.add("isCheck");
+        } else {
+            helpPswd.children[0].children[0].classList.remove("isCheck");
+        }
+
+        if(reUpperCase.exec(newPswd) !== null) {
+            helpPswd.children[0].children[1].classList.add("isCheck");
+        } else {
+            helpPswd.children[0].children[1].classList.remove("isCheck");
+        }
+
+        if(reLowerCase.exec(newPswd) !== null) {
+            helpPswd.children[0].children[2].classList.add("isCheck");
+        } else {
+            helpPswd.children[0].children[2].classList.remove("isCheck");
+        }
+
+        if(reNumbers.exec(newPswd) !== null) {
+            helpPswd.children[0].children[3].classList.add("isCheck");
+        } else {
+            helpPswd.children[0].children[3].classList.remove("isCheck");
+        }
+
+        if(reSpecCase.exec(newPswd) !== null) {
+            helpPswd.children[0].children[4].classList.add("isCheck");
+        } else {
+            helpPswd.children[0].children[4].classList.remove("isCheck");
+        }
+
+
+
+
+
+        //console.log("OnChange");
+        //console.log(e.target.value);
+    }
+
+</script>
+
+
+<script>
+
+    // let frmClass = document.querySelector(".frmClass");
+    // console.log("Class");
+    // console.log(frmClass);
     //
-    // console.log(" For IN");
-    // for (const frmKey in frm) {
-    //     console.log(frmKey);
+    // console.log(" For OF");
+    // for (const frmElement of frmClass) {
+    //     console.log(frmElement);
     // }
-
-
-    console.log(" For OF");
-    for (const frmElement of frm) {
-        console.log(frmElement);
-    }
-
-    frm.onchange = function (e) {
-        console.log(e);
-    }
-
-    frm.onsubmit = function (e) {
-        console.log("Before send -- after submit");
-        return false;
-    }
-
+    //
+    //
+    // console.log("By Name");
+    // let frm = document.forms.frmRegistration;
+    // console.log(frm);
+    //
+    // //
+    // // console.log(" For IN");
+    // // for (const frmKey in frm) {
+    // //     console.log(frmKey);
+    // // }
+    //
+    //
+    // console.log(" For OF");
+    // for (const frmElement of frm) {
+    //     console.log(frmElement);
+    // }
+    //
+    // frm.onchange = function (e) {
+    //     console.log(e);
+    // }
+    //
+    // frm.onsubmit = function (e) {
+    //     console.log("Before send -- after submit");
+    //     return false;
+    // }
+    //
 
     // console.log(" For OF elements");
     // for (const frmElement of frm.elements) {
