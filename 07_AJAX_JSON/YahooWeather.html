@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <div id="result">
+        
+    </div>
+
+    <div>
+        <input type="text" id="txtLocation">
+        <button id="doGetWeather" type="button"> Show </button>
+    </div>
+
+</div>
+
+<script>
+    let divResult = document.getElementById("result");
+    let txtLocation = document.getElementById("txtLocation");
+    
+    function getFromServer() {
+        fetch("https://yahoo-weather5.p.rapidapi.com/weather?location=" + encodeURI(txtLocation.value) + "&format=json&u=c", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "yahoo-weather5.p.rapidapi.com",
+                "x-rapidapi-key": "7e2afce0b1msh7f5c23d92a82e63p15d2e7jsn1fb4d1a13ff8"
+            }
+        })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(weather => {
+                console.log(weather);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+    
+    document.getElementById("doGetWeather").onclick = function () {
+        getFromServer();
+    }
+
+    
+    
+</script>
+</body>
+</html>
