@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #lstStudents {width: 200px; height: 400px;}
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <select multiple id="lstStudents">
+
+    </select>
+    <div>
+        <input type="hidden" id="numElement"  value="-1">
+        <input type="text" id="txtName">
+        <button id="doSaveChange" type="button"> Save </button>
+    </div>
+
+</div>
+
+<script>
+    // Наши элементы
+    let lstStudents = document.getElementById("lstStudents");
+    let txtName = document.getElementById("txtName");
+
+    // Наш массив информации
+    let students = localStorage.students;
+    if (students === null || students === undefined) students = [];
+
+
+    function render() {
+        console.log(students);
+        lstStudents.innerHTML = "";
+        for (let i = 0; i < students.length; i++) {
+            let o = document.createElement ("option");
+            o.value = students[i];
+            o.innerText = students[i];
+            lstStudents.appendChild(o);
+        }
+    }
+
+    render(); // Вызвать как загружу страницу
+
+    function create() {
+        console.log(students);
+        students.push(txtName.value);
+        localStorage.students = students;
+        render();
+    }
+
+    document.getElementById("doSaveChange").onclick = function () {
+        create();
+    }
+
+</script>
+
+</body>
+</html>
