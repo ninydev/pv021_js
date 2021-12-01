@@ -8,9 +8,22 @@
 <form method="post" action="http://localhost:63342/pv021_js/forForm.php?getVar=val">
     <input type="password" value="123" name="userPswd">
     <input type="submit" value="send">
-    <button type="button" id="plus" >press</button>
+    <button type="button" id="plus" >press Cookies </button>
+    <button type="button" id="plusLS" >press LS </button>
     <button type="button" id="sendAjaxGet">Send Get </button>
 </form>
+
+<script>
+    document.getElementById("plusLS").onclick = function (e) {
+        let c = localStorage.getItem('count');
+        if (c === null) c = 0;
+        c++;
+        localStorage.setItem('count', c);
+        e.target.innerText = c;
+
+        // console.log(c);
+    }
+</script>
 
 <script>
     let ajaxUrl = "http://localhost:63342/pv021_js/forForm.php";
