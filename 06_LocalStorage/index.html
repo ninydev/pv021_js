@@ -28,11 +28,17 @@
 
     // Наш массив информации
     let students = localStorage.students;
-    if (students === null || students === undefined) students = [];
+    try {
+        if (students === null || students === undefined) students = [];
+        else students = JSON.parse(students);
+    } catch (e) {
+        console.log(e);
+        students = [];
+    }
 
 
     function render() {
-        console.log(students);
+        // console.log(students);
         lstStudents.innerHTML = "";
         for (let i = 0; i < students.length; i++) {
             let o = document.createElement ("option");
@@ -45,9 +51,9 @@
     render(); // Вызвать как загружу страницу
 
     function create() {
-        console.log(students);
+        // console.log(students);
         students.push(txtName.value);
-        localStorage.students = students;
+        localStorage.students = JSON.stringify(students);
         render();
     }
 
