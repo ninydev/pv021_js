@@ -18,11 +18,9 @@
     // Метод отправки запроса
     function sendRequest(Request, doNext) {
         Request.apiKey = apiKey;
+        // console.log(Request);
 
-        console.log(Request);
-
-        fetch(apiUrl,
-            {
+        fetch(apiUrl, {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -35,15 +33,18 @@
                 referrerPolicy: 'no-referrer', // no-referrer, *client
                 body: JSON.stringify(Request) // body data type must match "Content-Type" header
             })
-        .then(res=>{
-            // Операции по проверки ответа от сервера (например код 200)
+        .then(res=>{ // Операции по проверки ответа от сервера (например код 200)
+            console.log(res);
+            if(res.status !== 200) {
+                console.log("Error http"); console.log(res.statusText); return;
+            }
             return res.json();
         })
-        .then(data=>{
-            // Операции уже с телом (body) ответа - передаю в callback Fun
-            doNext(data);
+        .then(data=>{ // Операции уже с телом (body) ответа - передаю в callback Fun
+            if (data.success) doNext(data);
+            else { console.log("Error data"); console.log(data.errors); }
         })
-        .catch(err=> {console.log("Error"); console.log(err);})
+        .catch(err=> {console.log("Error catch"); console.log(err);})
     }
 
 
