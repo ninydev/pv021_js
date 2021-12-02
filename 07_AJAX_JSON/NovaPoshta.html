@@ -11,6 +11,18 @@
 
 <script>
 
+    function buildSelect(data){
+        console.log(data);
+        let select = document.createElement("select");
+        for (let i = 0 ; i < data.length; i++) {
+            let o = document.createElement("option");
+            o.value = data[i]["Ref"];
+            o.innerText = data[i]["DescriptionRu"];
+            select.appendChild(o);
+        }
+        return select;
+    }
+
     // Настройки доступа к API
     let apiUrl = "https://api.novaposhta.ua/v2.0/json/";
     let apiKey = "3c81d19dc6c4375bc278f4c329fb03cb";
@@ -41,19 +53,23 @@
             return res.json();
         })
         .then(data=>{ // Операции уже с телом (body) ответа - передаю в callback Fun
-            if (data.success) doNext(data);
+            if (data.success) doNext(data.data);
             else { console.log("Error data"); console.log(data.errors); }
         })
         .catch(err=> {console.log("Error catch"); console.log(err);})
     }
 
 
+    function buildAreas(data){
+        document.getElementById("app").appendChild(buildSelect(data));
+    }
+
     // Пример - запрос на области
     sendRequest({
         "modelName": "Address",
         "calledMethod": "getAreas",
         "methodProperties": {}
-    }, console.log);
+    }, buildAreas);
 
 </script>
 
