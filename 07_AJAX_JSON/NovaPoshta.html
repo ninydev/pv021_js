@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+</div>
+
+
+<script>
+
+    let apiUrl = "https://api.novaposhta.ua/v2.0/json/";
+    let apiKey = "";
+    
+    function sendRequest(Request, doNext) {
+        fetch(apiUrl,
+            {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(Request) // body data type must match "Content-Type" header
+            })
+        .then(res=>{
+            return res.json();
+        })
+        .then(data=>{
+            console.log(data);
+            doNext(data);
+        })
+        .catch(err=> {console.log("Error"); console.log(err);})
+    }
+    
+
+
+</script>
+
+</body>
+</html>
