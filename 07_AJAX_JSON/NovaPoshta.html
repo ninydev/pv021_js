@@ -5,8 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<div id="app">
-</div>
+<ul id="app">
+    <li id="area"></li>
+    <li id="city"></li>
+    <li id="dep"></li>
+</ul>
 
 
 <script>
@@ -59,12 +62,34 @@
         .catch(err=> {console.log("Error catch"); console.log(err);})
     }
 
-
+    // Процесс построения селекта областей
     function buildAreas(data){
-        document.getElementById("app").appendChild(buildSelect(data));
+        let selectArea = buildSelect(data);
+        selectArea.onchange = function (e) {
+            sendRequest({
+                "modelName": "Address",
+                "calledMethod": "getCities",
+                "methodProperties": {
+                    AreaRef: e.target.value
+                }
+            }, buildCities);
+        }
+        document.getElementById("area").innerHTML = "";
+        document.getElementById("area").appendChild(selectArea);
     }
 
-    // Пример - запрос на области
+    // Процесс построения селекта городов
+    function buildCities(data) {
+        //console.log(data);
+        let selectCity = buildSelect(data);
+        document.getElementById("city").innerHTML = "";
+        document.getElementById("city").appendChild(selectCity);
+    }
+
+    function buildDep(data) {
+    }
+
+    // Пример - запрос на области - первый запрос при старте страницы
     sendRequest({
         "modelName": "Address",
         "calledMethod": "getAreas",
