@@ -11,10 +11,16 @@
 
 <script>
 
+    // Настройки доступа к API
     let apiUrl = "https://api.novaposhta.ua/v2.0/json/";
-    let apiKey = "";
-    
+    let apiKey = "3c81d19dc6c4375bc278f4c329fb03cb";
+
+    // Метод отправки запроса
     function sendRequest(Request, doNext) {
+        Request.apiKey = apiKey;
+
+        console.log(Request);
+
         fetch(apiUrl,
             {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -30,16 +36,23 @@
                 body: JSON.stringify(Request) // body data type must match "Content-Type" header
             })
         .then(res=>{
+            // Операции по проверки ответа от сервера (например код 200)
             return res.json();
         })
         .then(data=>{
-            console.log(data);
+            // Операции уже с телом (body) ответа - передаю в callback Fun
             doNext(data);
         })
         .catch(err=> {console.log("Error"); console.log(err);})
     }
-    
 
+
+    // Пример - запрос на области
+    sendRequest({
+        "modelName": "Address",
+        "calledMethod": "getAreas",
+        "methodProperties": {}
+    }, console.log);
 
 </script>
 
