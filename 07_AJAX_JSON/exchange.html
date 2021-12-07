@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form name="exchange">
+    <input type="number" name="UAH" id="uah"><label for="uah"> UAH </label>
+    <select name="currency">
+        <option value="RUR">RUR</option>
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+    </select>
+    <input type="number" name="result" id="result"><label for="uah"> Result </label>
+</form>
+
+
+<script>
+    let Exchange = [];
+    let apiUrl = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
+    function getExchange() {
+        fetch(apiUrl)
+        .then( res=> {
+            console.log(res);
+            if(res.status != 200) {
+                console.log("HTTP Error");
+                console.log(res.statusText);
+                return;
+            }
+            return res.json();
+        })
+        .then( data => {
+            console.log("Data: ");
+            console.log(data);
+            Exchange = data;
+        })
+        .catch( err=> {
+            console.log("Error: ");
+            console.log(err);
+        });
+    }
+    getExchange();
+
+    function calc() {
+        console.log("Считаю результат");
+        let cur = 0;
+        for(let i = 0; i < Exchange.length; i++){
+            if (Exchange[i]['ccy'] === document.forms.exchange.elements['currency'].value){
+                cur = Exchange[i]['buy'];
+                break;
+            }
+        }
+        document.forms.exchange.elements['result'].value =
+            document.forms.exchange.elements['UAH'].value / cur;
+    }
+
+    document.forms.exchange.elements['currency'].onchange = calc;
+    document.forms.exchange.elements['UAH'].onkeyup = calc;
+
+</script>
+
+</body>
+</html>
