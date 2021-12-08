@@ -90,6 +90,19 @@ txt: "Австралійський долар"
             console.log(data);
             let table = document.createElement("table");
             table.id = "tblData";
+            let thead = document.createElement("thead");
+
+            let trh = document.createElement("tr");
+            let th1 = document.createElement("th");
+
+            let th2 = document.createElement("th");
+
+            trh.appendChild(th1);
+            trh.appendChild(th2);
+            thead.appendChild(trh);
+            table.appendChild(thead);
+
+            let tbody = document.createElement("tbody");
             for(let i = 0; i < data.length; i++){
                 let tr = document.createElement("tr");
 
@@ -101,11 +114,12 @@ txt: "Австралійський долар"
                 tdRate.innerText = data[i].rate;
                 tr.appendChild(tdRate);
 
-                table.appendChild(tr);
+                tbody.appendChild(tr);
 
             }
 
             document.getElementById("app").innerHTML = "";
+            table.appendChild(tbody);
             document.getElementById("app").appendChild(table);
             // Тут моя таблица создана
             $('#tblData').DataTable();
