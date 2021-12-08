@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+</head>
+<body>
+
+<form name="date">
+    <select name="valcode">
+        <option value="" selected disabled> -- select -- </option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+    </select>
+    <input type="date" name="date">
+    <input type="button" name="byDate" value="By Date">
+    <input type="button" name="byPeriod" value="By Period">
+</form>
+<div id="app">
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+//USD, EUR
+// начало периода - конец периода
+
+    let apiUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json";
+// https://bank.gov.ua/NBUStatService/v1/statdirectory/exchangenew?json&date=20211201&valcode=EUR
+
+    let bigData = [];
+    let toDate;
+    let valcode;
+
+    function buildBigData() {
+        //TODO: построить данные по колебанию курса валюты за период
+    }
+
+    function getByDate(date) {
+        // Готовим дату к формату, который нам нужен
+        let dateToStr = date.toString().replaceAll('-', '');
+        // TODO: Проверить тут, достигли ли нужной даты - если да то
+        // запустить buildBigData
+        fetch(apiUrl+ "&date=" + dateToStr + "&valcode=" + valcode)
+            .then(res => {
+                //console.log(res);
+                return res.json();
+            })
+            .then( data => {
+                bigData[date] = data;
+                // TODO: уменьшить дату на вчера
+                date = date - 1;
+                getByDate(date);
+            })
+            .catch(err=> { console.log(err)})
+    }
+
+
+
+
+document.forms.date.elements['byPeriod'].onclick = function () {
+    toDate =  document.forms.date.elements['date'].value;
+    // 7,6,5,4,3,2,1,30,29,  до установленной даты по выбранной валюте
+
+
+}
+
+
+document.forms.date.elements['byDate'].onclick = function () {
+    let selectedDate =  document.forms.date.elements['date'].value.toString().replaceAll('-', '');
+    console.log(" Построить курсы ваолют по состоянию на " + selectedDate);
+
+    fetch(apiUrl + "&date=" + selectedDate)
+        .then(res=> {
+            console.log(res);
+            return res.json();
+        })
+        /*
+        cc: "AUD"
+exchangedate: "06.12.2021"
+r030: 36
+rate: 19.2697
+txt: "Австралійський долар"
+         */
+        .then(data=>{
+            console.log(data);
+            let table = document.createElement("table");
+            table.id = "tblData";
+            for(let i = 0; i < data.length; i++){
+                let tr = document.createElement("tr");
+
+                let tdName = document.createElement("td");
+                tdName.innerText = data[i].txt;
+                tr.appendChild(tdName);
+
+                let tdRate = document.createElement("td");
+                tdRate.innerText = data[i].rate;
+                tr.appendChild(tdRate);
+
+                table.appendChild(tr);
+
+            }
+
+            document.getElementById("app").innerHTML = "";
+            document.getElementById("app").appendChild(table);
+            // Тут моя таблица создана
+            $('#tblData').DataTable();
+
+
+        })
+        .catch(err=> { console.log(err)})
+
+}
+
+
+/*
+
+    fetch(apiUrl)
+    .then(res=> console.log(res))
+    .then()
+    .catch(err=> { console.log(err)})
+
+ */
+
+</script>
+
+</body>
+</html>
