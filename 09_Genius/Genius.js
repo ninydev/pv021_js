@@ -1,24 +1,39 @@
 class Genius{
 
-    get baseId() {  return this._baseId;}
-    set baseId(value) {  this._baseId = value;}
+
 
     constructor() {
         this.baseId = "app_";
         this._items = [];
         this._isLoad = false;
         this._error = null;
+        this.divResult = null;
     }
 
     get items() {  return this._items;}
     set items(value) {
         this._items = value;
+        // console.log(this._items);
+        if(this._items.length > 0){
+            this.renderItems();
+        } else {
+            this.error = "No Result"
+        }
+    }
+
+    // Генерация ответа
+    renderItems(){
+        let ul = document.createElement("ul");
+        this._items.map( item => {
+            let li = document.createElement("li");
+            ul.appendChild(li);
+        });
+        this.divResult.innerHTML = "";
+        this.divResult.appendChild(ul);
     }
 
 
-    renderError(){}
-    renderItems(){}
-    renderLoading(){}
+
 
     getFromServer(){
         fetch("https://genius.p.rapidapi.com/search?q=" +
@@ -31,21 +46,23 @@ class Genius{
             }
         })
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 return response.json();
             })
             .then(data => {
-                console.log(data);
-                this.items = data;
+                // console.log(data);
+                this.isLoad = true;
+                this.items = data.response.hits;
             })
             .catch(err => {
                 console.error(err);
+                this.error = err;
             });
     }
 
     doSearch(){
+        this.isLoad = false;
         this.getFromServer();
-        //document.getElementById(this.baseId + "Result").innerHTML = " Ready to Search";
     }
 
     render (homeElementId){
@@ -65,9 +82,38 @@ class Genius{
 
         document.getElementById(homeElementId).appendChild(divFormGroup);
 
-        let divResult = document.createElement("div");
-        divResult.id = this.baseId + "Result";
+        this.divResult = document.createElement("div");
+        this.divResult.id = this.baseId + "Result";
 
-        document.getElementById(homeElementId).appendChild(divResult);
+        document.getElementById(homeElementId).appendChild(this.divResult);
+    }
+
+    // Генерация сообщения об ошибке
+    renderError(){
+        this.divResult.innerHTML = "<h1>Error</h1>" + this._error;
+    }
+
+    // Генерация сообщения о загрузке
+    renderLoading(){
+        this.divResult.innerHTML = "Loading";
+    }
+
+
+    // Сеттеры и Геттеры с вызовами рендера
+    get baseId() {  return this._baseId;}
+    set baseId(value) {  this._baseId = value;}
+
+    set error(value) {
+        this._error = value;
+        if(this._error !== null) {
+            this.renderError();
+        }
+    }
+
+    set isLoad(value) {
+        this._isLoad = value;
+        if(!this._isLoad) {
+            this.renderLoading();
+        }
     }
 }
