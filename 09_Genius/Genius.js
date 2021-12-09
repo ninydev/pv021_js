@@ -36,6 +36,11 @@ class Genius{
             img.src = item.result.header_image_thumbnail_url;
             li.appendChild(img);
 
+            let video = document.createElement("div");
+            let vObject = new GeniusVideo(video, item.result.id);
+
+            li.appendChild(video);
+
             ul.appendChild(li);
         });
         this.divResult.innerHTML = "";
