@@ -26,6 +26,16 @@ class Genius{
         let ul = document.createElement("ul");
         this._items.map( item => {
             let li = document.createElement("li");
+            // Создание карточки поответу
+
+            let title =document.createElement("h5");
+            title.innerHTML = item.result.full_title;
+            li.appendChild(title);
+
+            let img =document.createElement("img");
+            img.src = item.result.header_image_thumbnail_url;
+            li.appendChild(img);
+
             ul.appendChild(li);
         });
         this.divResult.innerHTML = "";
