@@ -5,9 +5,20 @@ class Genius{
 
     constructor() {
         this.baseId = "app_";
+        this._items = [];
+        this._isLoad = false;
+        this._error = null;
     }
 
-    items = [];
+    get items() {  return this._items;}
+    set items(value) {
+        this._items = value;
+    }
+
+
+    renderError(){}
+    renderItems(){}
+    renderLoading(){}
 
     getFromServer(){
         fetch("https://genius.p.rapidapi.com/search?q=" +
