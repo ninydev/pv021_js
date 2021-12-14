@@ -26,7 +26,14 @@ class GeniusVideo {
                 this.isLoad = true;
                 this.item = data.response;
                 console.log(this.item);
-                this._divResult.innerHTML = this.item.song.embed_content;
+                //this._divResult.innerHTML = this.item.song.embed_content;
+                let iframe = document.createElement("iframe");
+
+                let videoId = this.item.song.media[0].url.split("=");
+
+                //iframe.src = this.item.song.media[0].url;
+                iframe.src ="https://www.youtube.com/embed/" + videoId[1];
+                this._divResult.appendChild(iframe);
             })
             .catch(err => {
                 console.error(err);
@@ -39,3 +46,4 @@ class GeniusVideo {
     }
 
 }
+
