@@ -48,8 +48,6 @@ class Genius{
     }
 
 
-
-
     getFromServer(){
         fetch("https://genius.p.rapidapi.com/search?q=" +
             encodeURI(document.getElementById(this.baseId + "txtSearch").value),
